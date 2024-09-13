@@ -1,0 +1,16 @@
+<h1>Tasks for <%= @project.name %></h1>
+
+<% if current_user.manager? %>
+  <%= link_to 'Create Task (Bug or Feature)', new_project_bug_path(@project), class: 'btn btn-primary' %>
+<% end %>
+
+<ul>
+  <% @bugs.each do |bug| %>
+    <li>
+      <%= link_to bug.title, project_bug_path(@project, bug) %> - <%= bug.status.humanize %>
+      <% if current_user.developer? && bug.developer_id == current_user.id %>
+        <%= link_to 'Update Status', edit_project_bug_path(@project, bug), class: 'btn btn-secondary' %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

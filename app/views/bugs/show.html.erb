@@ -1,0 +1,12 @@
+<h1><%= @bug.title %></h1>
+
+<p><strong>Type:</strong> <%= @bug.bug_type.humanize %></p>
+<p><strong>Status:</strong> <%= @bug.status.humanize %></p>
+<p><strong>Deadline:</strong> <%= @bug.deadline %></p>  
+<p><strong>Assigned Developer:</strong> <%= @bug.developer.name if @bug.developer %></p>
+
+<% if current_user.manager? %>
+  <%= link_to 'Edit Task', edit_project_bug_path(@project, @bug), class: 'btn btn-secondary' %>
+  <%= link_to 'Delete Task', project_bug_path(@project, @bug), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+<% end %>
+
