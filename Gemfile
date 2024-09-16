@@ -51,3 +51,7 @@ group :development do
 end
 
 gem "devise", "~> 4.9"
+gem 'cancancan'
+gem "bootstrap"
+gem "sassc-rails"
+

@@ -1,8 +1,10 @@
 class ProjectsController < ApplicationController
-    before_action :authenticate_user!  
-    # before_action :ensure_manager, only: [:new, :create, :edit, :update, :destroy]  
+    load_and_authorize_resource
+    before_action :authenticate_user!   
     before_action :set_project, only: [:show, :edit, :update, :destroy]
-  
+
+
+    layout  'home'
     def index
       @projects = Project.all
     end
@@ -14,17 +16,18 @@ class ProjectsController < ApplicationController
     def new
       @project = Project.new
     end
-  
+    
    
     def create
-    debugger
-      @project = Project.new(params.require(:project).permit(:name, :description))
+    
+      @project = Project.new(project_params)
       
       respond_to do |format|
         if @project.save
           format.html{ redirect_to @project, notice: 'Project was successfully created. Now you can add tasks.'}
         else
           format.html{render :new }
+          format.json {render json: @project.errors, status: :unprocessable_entity }
         end
        end
     end
@@ -33,7 +36,7 @@ class ProjectsController < ApplicationController
     end
   
     def update
-      if @project.update(params.require(:project).permit(:name, :description))
+      if @project.update(project_params)
         redirect_to @project, notice: 'Project was successfully updated.'
       else
         render :edit
@@ -50,10 +53,8 @@ class ProjectsController < ApplicationController
     def set_project
       @project = Project.find(params[:id])
     end
-    # def ensure_manager
-    #   unless current_user.manager?
-    #     redirect_to projects_path, alert: 'Only managers can create or edit projects.'
-    #   end
-    # end
+    def project_params
+      params.require(:project).permit(:name, :description )
+    end
   end
   

@@ -3,7 +3,9 @@
 
 <% if current_user.manager? %>
   <%= link_to 'Edit Project', edit_project_path(@project) %>
-  <%= link_to 'Delete Project', @project, method: :delete, data: { confirm: 'Are you sure?' }  %>
+  <%= button_to 'Delete Project', @project, method: :delete, data: { confirm: 'Are you sure?' }  %>
+<% end %>
+<% if current_user.manager? || current_user.qa? %>
   <%= link_to 'Create Task (Bug or Feature)', new_project_bug_path(@project) %>
 <% end %>
 <h2>Tasks (Bugs/Features)</h2>
@@ -17,3 +19,4 @@
     </li>
   <% end %>
 </ul>
+<%= link_to "Back", :back %>

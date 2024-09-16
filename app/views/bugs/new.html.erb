@@ -1,6 +1,8 @@
 <h1>Create New Task (Bug or Feature)</h1>
+  
 
-<%= form_with model: [@project, @bug], local: true do |form| %>
+
+<%= form_with model: [@project, @bug] do |form| %>
   <div class="field">
     <%= form.label :title %>
     <%= form.text_field :title, required: true %>
@@ -22,8 +24,12 @@
   </div>
   <div class="field">
     <%= form.label :deadline %>
-    <%= form.date_field :deadline %>  <!-- Deadline field -->
+    <%= form.date_field :deadline %>  
   </div>
+  <div class="field">
+    <%= form.label :screenshot, 'Upload Screenshot (PNG or GIF only)' %>
+    <%= form.file_field :screenshot %> 
+   </div>
   <div class="field">
     <%= form.label :developer_id, 'Assign Developer' %>
     <%= form.collection_select :developer_id, @developers, :id, :name, prompt: 'Select a Developer' %>
@@ -31,3 +37,4 @@
 
   <%= form.submit 'Create Task', class: 'btn btn-primary' %>
 <% end %>
+<%= link_to "Back", :back %>

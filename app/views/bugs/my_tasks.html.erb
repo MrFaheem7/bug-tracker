@@ -1,0 +1,18 @@
+<h1> My Assigned Bugs </h1>
+
+<% if @bugs.any? %>
+ <ul>
+    <% @bugs.each do |bug| %>
+     <li>
+      <%= link_to bug.title, project_bug_path(bug.project, bug) %> - <strong>Status:</strong> <%= bug.status.humanize %>
+        <% if can?(:update, bug) %>
+          <%= link_to 'Update Status', edit_project_bug_path(bug.project, bug), class: 'btn btn-secondary' %>
+        <% end %>
+     </li>
+     <% end %>
+ </ul>
+<% else %>
+ <p>You have no tasks assigned at the moment.</p>
+<% end %>
+
+

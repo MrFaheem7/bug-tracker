@@ -1,7 +1,7 @@
 <h1>Tasks for <%= @project.name %></h1>
 
-<% if current_user.manager? %>
-  <%= link_to 'Create Task (Bug or Feature)', new_project_bug_path(@project), class: 'btn btn-primary' %>
+<% if current_user.manager?  %>
+  <%= link_to 'Create Task (Bug or Feature)', new_project_bug_path(@project) %>
 <% end %>
 
 <ul>
@@ -14,3 +14,4 @@
     </li>
   <% end %>
 </ul>
+<%= link_to "Back", :back %>
