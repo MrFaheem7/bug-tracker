@@ -1,21 +1,20 @@
 class BugsController < ApplicationController
     load_and_authorize_resource
     before_action :authenticate_user!
-
     before_action :set_project  
     before_action :set_bug, only: [:show, :edit, :update, :destroy]
     skip_before_action :set_project, only: [:my_tasks]
     layout  'home'
     def index
-      @bugs = @project.bugs  
+      @bugs = @project.bugs.uniq
     end
   
     def show
     end
   
     def new
-      @bug = @project.bugs.build  
-      @developers = User.where(user_type: 'developer')  
+      @bug = @project.bugs.new  
+      @developers = @project.users.where(user_type: 'developer').uniq
     end
   
     def create
@@ -29,7 +28,7 @@ class BugsController < ApplicationController
     end
   
     def edit
-      @developers = User.where(user_type: 'developer') 
+      @developers = @project.users.where(user_type: 'developer').uniq
     end
   
     def update
@@ -46,7 +45,7 @@ class BugsController < ApplicationController
     end
     
     def my_tasks 
-      @bugs = Bug.accessible_by(current_ability).where(developer_id: current_user.id)
+      @bugs = Bug.where(developer_id: current_user.id)
     end
   
     private

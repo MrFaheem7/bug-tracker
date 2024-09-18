@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_16_064832) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_18_130408) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -56,16 +56,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_16_064832) do
     t.index ["project_id"], name: "index_bugs_on_project_id"
   end
 
+  create_table "project_users", id: false, force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.bigint "user_id", null: false
+  end
+
   create_table "projects", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "projects_users", id: false, force: :cascade do |t|
-    t.bigint "project_id", null: false
-    t.bigint "user_id", null: false
   end
 
   create_table "users", force: :cascade do |t|

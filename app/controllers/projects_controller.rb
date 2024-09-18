@@ -6,7 +6,7 @@ class ProjectsController < ApplicationController
 
     layout  'home'
     def index
-      @projects = Project.all
+      @projects = current_user.projects.all.uniq
     end
   
     def show
@@ -19,18 +19,16 @@ class ProjectsController < ApplicationController
     
    
     def create
-    
       @project = Project.new(project_params)
-      
-      respond_to do |format|
-        if @project.save
-          format.html{ redirect_to @project, notice: 'Project was successfully created. Now you can add tasks.'}
-        else
-          format.html{render :new }
-          format.json {render json: @project.errors, status: :unprocessable_entity }
-        end
-       end
-    end
+      @project.users << User.where(id: project_params[:user_ids])
+      @project.users << current_user
+
+      if @project.save
+        redirect_to @project, notice: 'Project was successfully created. Now you can add tasks.'
+      else
+        render :new
+      end
+    end    
   
     def edit
     end
@@ -53,8 +51,9 @@ class ProjectsController < ApplicationController
     def set_project
       @project = Project.find(params[:id])
     end
+   
     def project_params
-      params.require(:project).permit(:name, :description )
+      params.require(:project).permit(:name, :description, user_ids: [] )
     end
   end
-  
+ 

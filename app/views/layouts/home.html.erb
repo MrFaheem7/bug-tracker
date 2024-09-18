@@ -18,25 +18,7 @@
   </head>
 
   <body>
-<nav>
- <ul>
 
-  <% if current_user.developer? %>
-    <li><%= link_to 'My Tasks', my_tasks_path %></li> 
-  <% end %>
- 
-
-  <% if current_user %>
-  <%= link_to "Edit registration",edit_user_registration_path %>
-  <%= link_to "Home", projects_path %>
-  <%= button_to "Logout", destroy_user_session_path, method: :delete, data: { method: :delete} %>
-  
-  <% else %>
-  <%= link_to "Sign up", new_user_registration_path %> 
-  <%= link_to "Sign In", new_user_session_path %>
-  <% end %>
-  </ul>
-</nav>
 <div class="container-flouid">
   <nav class="navbar navbar-expand-lg bg-light">
     <div class="container">
@@ -49,29 +31,27 @@
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Member</a>
+          <% if current_user.developer? %>
+           <%= link_to 'My Tasks', my_tasks_path, class:'nav-link active' %>
+          <% end %>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="#">Courses</a>
+              <%= link_to "Home", projects_path, class:'nav-link active' %>
           </li>
-
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Blog</a>
+            <% if current_user %>
+              <%= link_to "Edit Profile",edit_user_registration_path, class:'nav-link active' %>
+            <% end %>
           </li>
-
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Event</a>
-          </li>
-
         </ul>
-        <form class="">
-          <a class="btn btn-outline-primary mr-2" href="#">Login</a>
-          <a class="btn btn-outline-success" href="#">Become member</a>
-        </form>
-
+          <%= button_to "Logout", destroy_user_session_path, class:'btn btn-danger  ml-3', method: :delete, data: { method: :delete} %>
       </div>
     </div>
   </nav>
-    <%= yield %>
+  <div class="container p-5">
+
+  <%= yield %>
+  </div>
+</div>
   </body>
 </html>

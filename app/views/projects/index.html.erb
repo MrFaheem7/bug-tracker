@@ -1,9 +1,13 @@
-<h1>Projects</h1>
-<%  if current_user.manager? %>
-  <%= link_to 'Add New Project ', new_project_path %>
+<h1 class="mb-4">Projects</h1>
+
+<% if current_user.manager? %>
+  <%= link_to 'Add New Project', new_project_path, class: 'btn btn-success mb-3' %>
 <% end %>
-<ul>
+
+<ul class="list-group">
   <% @projects.each do |project| %>
-    <li><%= link_to project.name, project_path(project) %></li>
+    <li class="list-group-item">
+      <%= link_to project.name, project_path(project) %>
+    </li>
   <% end %>
 </ul>

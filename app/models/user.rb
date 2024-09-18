@@ -6,8 +6,8 @@ class User < ApplicationRecord
       qa: 2
     }
 
-    has_many :projects_users
-    has_many :projects, through: :projects_users
+    has_many :project_users
+    has_many :projects, through: :project_users
     has_many :created_bugs, class_name: 'Bug', foreign_key: 'creator_id'  
     has_many :assigned_bugs, class_name: 'Bug', foreign_key: 'developer_id'  
   

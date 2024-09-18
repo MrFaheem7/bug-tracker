@@ -7,7 +7,7 @@ class Bug < ApplicationRecord
  
   
   enum status: {
-    newbug: 0,
+    latest: 0,
     started: 1,
     completed: 2,  
     resolved: 3    
@@ -26,6 +26,7 @@ class Bug < ApplicationRecord
   has_one_attached :screenshot
   validate :screenshot_format
   private
+  
    def screenshot_format
     return unless screenshot.attached?
 

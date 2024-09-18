@@ -1,28 +1,33 @@
-<h1>Edit Project</h1>
+<h1 class="mb-4">Edit Project</h1>
 
-<%= form_with model: @project, local: true do |form| %>
- <% if @project.errors.any? %>
+<%= form_with model: @project, local: true, html: { class: 'needs-validation'} do |form| %>
+   <% if @project.errors.any? %>
   <div id="error_explanation">
-      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
-     ul>
-        <% @project.errors.full_messages.each do |message| %>
-         <li><%= message %></li>
-        <% end %>
+    <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+    <ul>
+      <% @project.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
     </ul>
-  </div>
-<% end %>
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
+    </div>
+   <% end %>
+  <div class="mb-3">
+    <%= form.label :name, class: 'form-label' %>
+    <%= form.text_field :name, class: 'form-control' %>
   </div>
 
-  <div class="actions">
+  <div class="mb-3">
+    <%= form.label :description, class: 'form-label' %>
+    <%= form.text_area :description, class: 'form-control', rows: 3 %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :user_ids, 'Assign Users (Select multiple)', class: 'form-label' %>
+    <%= form.collection_select :user_ids, User.where(user_type: [:developer, :qa]), :id, :name, { prompt: 'Select Users', multiple: true }, class: 'form-select' %>
+  </div>
+  <div class="mb-3">
     <%= form.submit 'Update Project', class: 'btn btn-primary' %>
   </div>
 <% end %>
+
 <%= link_to "Back", :back %>
