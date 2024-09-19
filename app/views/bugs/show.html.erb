@@ -1,4 +1,9 @@
-<h1 class="mb-4"><%= @bug.title %></h1>
+  <h1 class="mb-4"><%= @bug.title %>
+   <% if @bug.creator %>
+      <small>(Created by <%= @bug.creator.name.capitalize %>)</small> :
+      <small><%= @bug.creator.user_type.capitalize %></small>
+    <% end %>
+  </h1>
 
 <div class="mb-3">
   <p><strong>Project:</strong> <%= @project.name %></p>

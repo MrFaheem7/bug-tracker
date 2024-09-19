@@ -18,7 +18,7 @@ class BugsController < ApplicationController
     end
   
     def create
-      @bug = @project.bugs.build(bug_params)
+      @bug = @project.bugs.new(bug_params)
       @bug.creator = current_user  
       if @bug.save
         redirect_to project_bug_path(@project, @bug), notice: 'Task (bug/feature) was successfully created.'
