@@ -3,7 +3,6 @@ class ProjectsController < ApplicationController
     before_action :authenticate_user!   
     before_action :set_project, only: [:show, :edit, :update, :destroy]
 
-
     layout  'home'
     def index
       @projects = current_user.projects.all.uniq
@@ -16,8 +15,7 @@ class ProjectsController < ApplicationController
     def new
       @project = Project.new
     end
-    
-   
+
     def create
       @project = Project.new(project_params)
       @project.users << User.where(id: project_params[:user_ids])

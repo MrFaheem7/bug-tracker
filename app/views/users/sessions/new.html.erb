@@ -1,7 +1,7 @@
 <h2 class="text-center mb-4">Log In</h2>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'border p-4 rounded' }) do |f| %>
-
+ <%= render "users/shared/error_messages", resource: resource %>
   <div class="mb-3">
     <%= f.label :email, class: 'form-label' %>
     <%= f.email_field :email, class: 'form-control', autofocus: true, autocomplete: "email", placeholder: "Enter your email" %>

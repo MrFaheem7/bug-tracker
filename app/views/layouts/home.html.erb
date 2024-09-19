@@ -20,7 +20,22 @@
   <body>
 
 <div class="container-flouid">
-  <nav class="navbar navbar-expand-lg bg-light">
+<% flash.each do |key, message| %>
+  <% alert_class = case key.to_sym
+    when :notice then 'alert-success'
+    when :alert  then 'alert-danger'
+    when :error  then 'alert-danger'
+    when :info   then 'alert-info'
+    else 'alert-warning'
+  end %>
+  
+  <div class="alert alert-dismissible fade show m-0 <%= alert_class %>">
+    <%= message %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>
+
+  <nav class="navbar navbar-expand-lg " style="background-color: rgba(224, 224, 216, 0.82);">
     <div class="container">
       <a class="navbar-brand" href="/">
         <h3>Bug Tracker</h3>
@@ -49,7 +64,7 @@
     </div>
   </nav>
   <div class="container p-5">
-
+  
   <%= yield %>
   </div>
 </div>
