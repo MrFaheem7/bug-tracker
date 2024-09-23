@@ -2,10 +2,10 @@ class ProjectsController < ApplicationController
     load_and_authorize_resource
     before_action :authenticate_user!   
     before_action :set_project, only: [:show, :edit, :update, :destroy]
-
+   
     layout  'home'
     def index
-      @projects = current_user.projects.all.uniq
+      @projects = current_user.projects
     end
   
     def show
@@ -18,10 +18,8 @@ class ProjectsController < ApplicationController
 
     def create
       @project = Project.new(project_params)
-      @project.users << User.where(id: project_params[:user_ids])
-      @project.users << current_user
-
       if @project.save
+        @project.users << current_user
         redirect_to @project, notice: 'Project was successfully created. Now you can add tasks.'
       else
         render :new
@@ -33,6 +31,7 @@ class ProjectsController < ApplicationController
   
     def update
       if @project.update(project_params)
+        @project.users << current_user
         redirect_to @project, notice: 'Project was successfully updated.'
       else
         render :edit
@@ -45,13 +44,14 @@ class ProjectsController < ApplicationController
     end
   
     private
-  
     def set_project
       @project = Project.find(params[:id])
     end
    
     def project_params
-      params.require(:project).permit(:name, :description, user_ids: [] )
-    end
+      permitted_params = params.require(:project).permit(:name, :description, user_ids: [])
+      permitted_params[:user_ids] = permitted_params[:user_ids].compact_blank
+      permitted_params
+    end    
   end
  

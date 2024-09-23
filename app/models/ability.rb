@@ -8,17 +8,16 @@ class Ability
       can :manage, Bug
 
     elsif user.developer?
-     
-      can :manage, Bug do |bug|
-        bug.developer == user
+      can :update, Bug do |bug|
+        bug.developer_id == user.id
       end
+      can :read, Bug
       can :read, Project
       can :my_tasks,Bug
 
     elsif user.qa?
-      can :create, Bug
+      can :manage, Bug
       can :read, Project
-      can :read, Bug
 
     else
       can :read, Project

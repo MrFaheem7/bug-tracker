@@ -10,18 +10,16 @@
 
 <% if current_user.manager? || current_user.qa? %>
   <%= link_to 'Create Task (Bug or Feature)', new_project_bug_path(@project), class: 'btn btn-success mb-3' %>
+  <h2 class="mt-4">Tasks (Bugs/Features)</h2>
+  <ul class="list-group">
+    <% @bugs.each do |bug| %>
+      <li class="list-group-item">
+        <%= link_to bug.title, project_bug_path(@project, bug) %> - <%= bug.status.humanize %>
+        <% if current_user.developer? && bug.developer_id == current_user.id %>
+          <%= link_to 'Update Status', edit_project_bug_path(@project, bug), class: 'btn btn-secondary btn-sm ms-2' %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
 <% end %>
-
-<h2 class="mt-4">Tasks (Bugs/Features)</h2>
-<ul class="list-group">
-  <% @bugs.each do |bug| %>
-    <li class="list-group-item">
-      <%= link_to bug.title, project_bug_path(@project, bug) %> - <%= bug.status.humanize %>
-      <% if current_user.developer? && bug.developer_id == current_user.id %>
-        <%= link_to 'Update Status', edit_project_bug_path(@project, bug), class: 'btn btn-secondary btn-sm ms-2' %>
-      <% end %>
-    </li>
-  <% end %>
-</ul>
-
 <%= link_to "Back", :back, class: 'mt-3' %>

@@ -1,6 +1,6 @@
 <h1>Tasks for <%= @project.name %></h1>
 
-<% if current_user.manager?  %>
+<% if current_user.manager? || current_user.qa?  %>
   <%= link_to 'Create Task (Bug or Feature)', new_project_bug_path(@project) %>
 <% end %>
 
